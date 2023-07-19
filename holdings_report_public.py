@@ -8,7 +8,7 @@ import pandas as pd
 class HoldingsReport:
 
     def __init__(self, cert, pkcs12_password, auth, accounts, api_url):
-        # cert = file path to p12 file, auth is encoded basic auth (user, secret), accounts=list,
+        # cert = file path to p12 file, auth is encoded basic auth (user, secret), accounts is a list of accounts
         self.cert = cert
         self.pkcs12_password = pkcs12_password
         self.accounts = accounts
@@ -16,7 +16,6 @@ class HoldingsReport:
         self.auth = auth
 
     def _get_token(self):
-        # call to token api
         self.url = "https://apigatewayb2b.bnymellon.com/token"
         self.auth_payload = 'grant_type=client_cert'
         self.auth_headers = {
@@ -35,7 +34,7 @@ class HoldingsReport:
 
     def _get_holdings(self):
         # open csv with account numbers and iterate over each one to make a call to holdings api using token
-        self.holdings_data = []                          # list to store holdings data
+        self.holdings_data = []                          # Store holdings data
         self.num_accounts = len(self.accounts)           # sum number of accounts
         self.counter = 1                                 # track which account the script is running
         for i in self.accounts:
